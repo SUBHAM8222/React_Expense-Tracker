@@ -1,4 +1,5 @@
 import React,{useState,useRef} from 'react';
+import { useHistory } from 'react-router-dom';
 import './SignUp.css'
 
 
@@ -7,6 +8,7 @@ const SignUp = () => {
     const inputEmailRef = useRef();
     const inputPassRef = useRef();
     const inputConfirmPassRef = useRef();
+    const history=useHistory();
 
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading,setIsLoading] =useState(false);
@@ -58,7 +60,7 @@ const SignUp = () => {
             }
         }).then((data)=>{
     //         authCtx.login(data.idToken,data.email);
-    //   history.replace('/')
+       history.replace('/WelcomePage');
     })
     }
 
