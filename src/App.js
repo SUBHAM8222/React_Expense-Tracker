@@ -2,6 +2,7 @@ import SignUp from './SignUp/SignUp';
 import { Route,Switch } from 'react-router-dom';
 import WelcomePage from './Pages/WelcomePage';
 import './App.css';
+import CompleteProfile from './Pages/CompleteProfile';
 
 function App() {
   return (
@@ -9,6 +10,10 @@ function App() {
       <Switch>
        <Route path='/welcomePage' exact>
 <WelcomePage/>
+      </Route>
+      <Route path='/CompleteProfile'>
+        <CompleteProfile/>
+
       </Route>
       <SignUp></SignUp>
       </Switch>

@@ -56,10 +56,12 @@ const SignUp = () => {
                 return res.json().then(data => {
                     console.log(data.error.message)
                     alert(data.error.message)
+                    
                 })
             }
         }).then((data)=>{
     //         authCtx.login(data.idToken,data.email);
+    localStorage.setItem('IDTOKEN',data.idToken);
        history.replace('/WelcomePage');
     })
     }
