@@ -1,5 +1,6 @@
 import React,{useState,useRef} from 'react';
 import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './SignUp.css'
 
 
@@ -47,7 +48,7 @@ const SignUp = () => {
             setIsLoading(false)
             if(res.ok){
                
-                console.log('Successfully Registered')
+                console.log(res)
                 alert('Successfully Registered')
                
                 return res.json()
@@ -92,7 +93,7 @@ const SignUp = () => {
           >
               {isLogin ? 'Create new account' : 'Login with existing account'}
           </button>
-               
+               <NavLink to='/ChangePassword'>forget password?click</NavLink>
             </form>
             
         </div>
