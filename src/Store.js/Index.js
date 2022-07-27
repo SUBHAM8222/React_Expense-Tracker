@@ -45,10 +45,10 @@ const itemslice=createSlice({
 
 
 })
-
 const store=configureStore({
     reducer:{auth:authslice.reducer,data:itemslice.reducer}
 })
 export const authsliceactions=authslice.actions;
 export const itemsliceactions=itemslice.actions;
+
 export default store;

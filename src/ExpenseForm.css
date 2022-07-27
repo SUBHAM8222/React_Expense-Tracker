@@ -24,3 +24,13 @@
     height: 25px;
     cursor: pointer;
 } 
+.signupBody5 {
+    background-color: rgb(186, 22, 22);
+    margin: 3rem auto;
+    width: 95%;
+    max-width: 48rem;
+    border-radius: 6vh;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+    padding: 3vmax;
+    text-align: center;
+}
