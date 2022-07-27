@@ -4,18 +4,31 @@ import Displaydetails from "./Displaydetails";
 import axios from "axios";
 import { itemsliceactions } from "./Store.js/Index";
 import { useDispatch } from "react-redux";
-//import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 const Expensesform = () => {
- // const items = useSelector((state) => state.data.items);
+ const items = useSelector((state) => state.data.items);
 
-//   function makecsv(data)
-//   {
-//     return data.map(r=>r.join('.')).join('/n');
-//   }
-//   const e1=document.getElementById('E1');
-//   const blob1=new Blob([makecsv(items)],{type:'plain/text'})
-// const file=URL.createObjectURL(blob1);
-//     e1.href=file;
+  function makecsv(data)
+  {
+    const string=JSON.stringify(data);
+
+    return string.join(',');
+  }
+
+  function downloadfile()
+  {
+  
+    const blob1=new Blob([makecsv(items)],{type:'plain/text'})
+  const file=URL.createObjectURL(blob1);
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = file;
+  // the filename you want
+  a.download = 'todo-1.txt';
+  document.body.appendChild(a);
+  a.click();
+  }
+  
   const dispatch = useDispatch();
 
   const [premium, setpremium] = useState(false);
@@ -172,7 +185,7 @@ const Expensesform = () => {
             </button>
           )}
         </form>
-        {/* <a id='E1' download='File.csv'>DOWNLOAD YOUR EXPENSE</a> */}
+        <button  onClick={downloadfile}>DOWNLOAD YOUR EXPENSE</button>
       </div>
       <Displaydetails
         details={values}
