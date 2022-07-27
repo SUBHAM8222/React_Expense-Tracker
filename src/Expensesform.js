@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import "./ExpenseForm.css";
 import Displaydetails from "./Displaydetails";
 import axios from "axios";
+import { itemsliceactions } from "./Store.js/Index";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 const Expensesform = () => {
+
+  const items=useSelector(state=>state.data.items)
+  console.log(items);
+
+  const dispatch=useDispatch();
 
     const [type,settype]=useState();
     const[date,setdate]=useState();
@@ -12,7 +20,7 @@ const Expensesform = () => {
     const [change,bechange]=useState(false);
    
 
-
+console.log()
     useEffect(()=>{
 
       const showdata=async()=>{ const data=await axios.get('https://https-react-aa6f2-default-rtdb.firebaseio.com/expense.json')
@@ -33,6 +41,7 @@ const Expensesform = () => {
   
 
     setvalues(expenses);
+    dispatch(itemsliceactions.ReceivedData(expenses))
       
   
       }
@@ -54,17 +63,19 @@ bechange(state=>!state);
     }
 
  
-//arr.push(a);
+
 
   axios.post('https://https-react-aa6f2-default-rtdb.firebaseio.com/expense.json',
 a)
 
-//console.log(data);
 
+dispatch(itemsliceactions.inputData({ type:type,
+  date:date,
+  amount:amount,
+  name:name,}));
 
 
 }
-//console.log(values);
 const typechangehandler=(event)=>{
 
   
@@ -93,7 +104,27 @@ const amountchangehandler=(event)=>{
 
 
 }
+const deletehandler=(id)=>{
 
+  axios.delete(`https://https-react-aa6f2-default-rtdb.firebaseio.com/expense/${id}.json`)
+
+  setvalues(values.filter((value) => value.id !== id));
+}
+// const edithandler=(id)=>{
+
+//   setvalues(values.filter((value) => value.id !== id));
+//  const a={
+        
+//     type:type,
+//     date:date,
+//     amount:amount,
+//     name:name,
+
+// }
+
+//   axios.put(`https://https-react-aa6f2-default-rtdb.firebaseio.com/expense/${id}.json`,
+//  a )
+// }
 
   return (
 
@@ -130,7 +161,7 @@ const amountchangehandler=(event)=>{
       </form>
      
     </div>
-     <Displaydetails details={values}></Displaydetails>  
+     <Displaydetails details={values} ondelete={deletehandler} ></Displaydetails>  
     </div> 
   
  

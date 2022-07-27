@@ -3,16 +3,20 @@ import React from "react";
 import "./CompleteProfile.css";
 import LogoutButton from "./LogoutButton";
 import axios from "axios";
+import Expensesform from "../Expensesform";
+import { useSelector } from "react-redux";
 const CompleteProfile = () => {
+
+  const token=useSelector(state=>state.auth.IDTOKEN)
   const [userData,setUserData]=useState();
   const inputfullnameref = useRef();
   const imageurlref = useRef();
-  const token = localStorage.getItem("IDTOKEN");
+  
 
   useEffect(()=>{
 fetchData()
 
-  },)
+  },[])
 
 
   const onsubmitHandler = async(event) => {
@@ -44,7 +48,7 @@ fetchData()
     const data = await axios.post(
       "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDvw0A-v_9F2Unb81eL4qV9KSPayWoxBO4",
       { idToken: token });
-      console.log(data.data.users);
+     // console.log(data.data.users);
       setUserData(data.data.users[0]);
 
       
@@ -113,6 +117,10 @@ console.log(userData);
           </div>
         </div>
       </div>
+
+      
+        <Expensesform/>
+     
     </React.Fragment>
   );
 };

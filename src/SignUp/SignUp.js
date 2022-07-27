@@ -2,19 +2,24 @@ import React,{useState,useRef} from 'react';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import './SignUp.css'
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { authsliceactions } from '../Store.js/Index';
 
 const SignUp = () => {
+
+    const login=useSelector(state=>state.auth.loggedIn)
+    const dispatch=useDispatch();
     
     const inputEmailRef = useRef();
     const inputPassRef = useRef();
     const inputConfirmPassRef = useRef();
     const history=useHistory();
 
-    const [isLogin, setIsLogin] = useState(true);
+    //const [isLogin, setIsLogin] = useState(true);
     const [isLoading,setIsLoading] =useState(false);
     const switchAuthModeHandler = () => {
-        setIsLogin((prevState) => !prevState);
+       dispatch(authsliceactions.isloggedIn())
       };
     const submitHandler = (event)=>{
         event.preventDefault();
@@ -28,7 +33,7 @@ const SignUp = () => {
         }
         let url;
         setIsLoading(true);
-        if(isLogin){
+        if(login){
             url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvw0A-v_9F2Unb81eL4qV9KSPayWoxBO4"
         }
        else{
@@ -62,7 +67,7 @@ const SignUp = () => {
             }
         }).then((data)=>{
     //         authCtx.login(data.idToken,data.email);
-    localStorage.setItem('IDTOKEN',data.idToken);
+       dispatch(authsliceactions.tokenId(data.idToken))
        history.replace('/WelcomePage');
     })
     }
@@ -76,7 +81,7 @@ const SignUp = () => {
 
   return (
         <div className='signupBody'>
-            <h2>{isLogin ?'Login' : 'Sign Up'}</h2>
+            <h2>{login ?'Login' : 'Sign Up'}</h2>
             <form onSubmit={submitHandler}>
              
                 <input type="email" placeholder='Email' ref={inputEmailRef} required />
@@ -84,16 +89,16 @@ const SignUp = () => {
                 <input type="password" placeholder='Password' ref={inputPassRef} required  />
                
                 <input type="password" placeholder='Confirm Password' ref={inputConfirmPassRef} required />
-                { !isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>}
+                { !isLoading && <button>{login ? 'Login' : 'Create Account'}</button>}
          {isLoading && <p>Loading..</p>}
          <button
             type='button'
             className='signupBtn'
             onClick={switchAuthModeHandler}
           >
-              {isLogin ? 'Create new account' : 'Login with existing account'}
-          </button>
-               <NavLink to='/ChangePassword'>forget password?click</NavLink>
+              {login ? 'Create new account' : 'Login with existing account'}
+         </button>
+              { login&&<NavLink to='/ChangePassword'>forget password?click</NavLink>}
             </form>
             
         </div>

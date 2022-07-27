@@ -1,7 +1,9 @@
 import './Displaydetails.css';
 
 const Displaydetails = (props) => {
-  console.log(props.details);
+
+
+ 
   const display = props.details.map((data) => (
 <section className="productContainer">
        <span>{data.name} </span>
@@ -9,6 +11,8 @@ const Displaydetails = (props) => {
        <span>{data.date} </span>
 
        <span>{data.type}</span>
+       <span><button onClick={props.ondelete.bind(null,data.id)}>DELETE</button></span>
+       {/* <span><button onClick={props.onedit.bind(null,data.id)}>EDIT</button></span> */}
     
      </section>
   ))
